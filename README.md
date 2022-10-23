@@ -1,5 +1,5 @@
 # ratelimit-demo
-performant rate limiter demo using the sliding window algorithim with a redis backing
+performant rate limiter demo using the sliding window algorithim with a redis/keydb backing
 
 ## running the demo
 ```bash
