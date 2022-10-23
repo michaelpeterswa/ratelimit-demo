@@ -3,6 +3,6 @@ ratelimit:
   window: 15s
   limit: 5
 redis:
-  url:
+  url: kv
   port: 6379
   password:

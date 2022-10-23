@@ -5,8 +5,13 @@ services:
   main:
     build: .
     environment:
-      CONFIG_FILE: "/config/config.yaml"
+      CONFIG_FILE: "/config/sample.config.yaml"
     ports:
       - "8080:8080"
     volumes:
       - ./config:/config
+
+  kv:
+    image: "eqalpha/keydb"
+    ports:
+      - "6379:6379"
