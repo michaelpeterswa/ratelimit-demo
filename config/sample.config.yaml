@@ -3,6 +3,6 @@ ratelimit:
   window: 15s
   limit: 5
 redis:
-  url: 10.0.0.10
-  port: 6369
-  password: 
+  url:
+  port: 6379
+  password:

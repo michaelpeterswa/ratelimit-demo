@@ -34,25 +34,25 @@ func (idh *IDHandler) Handle(w http.ResponseWriter, r *http.Request) {
 
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
-		rfc7807.SimpleResponse(w, http.StatusInternalServerError, "error reading request body")
+		_ = rfc7807.SimpleResponse(w, http.StatusInternalServerError, "error reading request body")
 		return
 	}
 
 	var id *ID
 	err = json.Unmarshal(body, &id)
 	if err != nil {
-		rfc7807.SimpleResponse(w, http.StatusInternalServerError, "error unmarshalling request body")
+		_ = rfc7807.SimpleResponse(w, http.StatusInternalServerError, "error unmarshalling request body")
 		return
 	}
 
 	isAllowed, err := idh.ratelimit(r.Context(), id.ID)
 	if err != nil {
-		rfc7807.SimpleResponse(w, http.StatusInternalServerError, err.Error())
+		_ = rfc7807.SimpleResponse(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
 	if !isAllowed {
-		rfc7807.SimpleResponse(w, http.StatusTooManyRequests, "rate limit exceeded")
+		_ = rfc7807.SimpleResponse(w, http.StatusTooManyRequests, "rate limit exceeded")
 		return
 	}
 
@@ -64,14 +64,14 @@ func (idh *IDHandler) Handle(w http.ResponseWriter, r *http.Request) {
 
 	bytes, err := json.Marshal(respBody)
 	if err != nil {
-		rfc7807.SimpleResponse(w, http.StatusInternalServerError, "error marshalling response body")
+		_ = rfc7807.SimpleResponse(w, http.StatusInternalServerError, "error marshalling response body")
 		return
 	}
 
 	w.WriteHeader(http.StatusOK)
 	_, err = w.Write(bytes)
 	if err != nil {
-		rfc7807.SimpleResponse(w, http.StatusInternalServerError, "error writing response body")
+		_ = rfc7807.SimpleResponse(w, http.StatusInternalServerError, "error writing response body")
 		return
 	}
 }
